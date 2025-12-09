@@ -1,29 +1,18 @@
-import sys
 from prompting import BookRecommender
 
 def main():
-    # Initialize the agent
     print("Loading book recommender agent...")
-    agent = BookRecommender(
-        data_path="data/books_clean.csv",
-        examples_path="src/examples.txt"
-    )
-    print("Agent loaded!\n")
-    print("Ask for a recommendation (or type 'quit' to exit):")
-    
-    # Command-line loop
+
+    agent = BookRecommender()  
+
     while True:
-        user_input = input("\nYou: ").strip()
-        
-        if user_input.lower() in {"quit", "exit"}:
-            print("Goodbye!")
+        user_query = input("\nEnter a search request (or 'quit'): ").strip()
+        if user_query.lower() in {"quit", "exit"}:
             break
-        
-        try:
-            response = agent.recommend(user_input)
-            print("\nAgent:", response)
-        except Exception as e:
-            print("Error:", e)
+
+        response = agent.query(user_query)
+        print("\n--- Model Response ---")
+        print(response)
 
 if __name__ == "__main__":
     main()

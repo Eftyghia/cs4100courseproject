@@ -2,9 +2,8 @@ import json
 from pathlib import Path
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 
-
 EXAMPLES_FILE = "src/examples.txt"
-MODEL_NAME = "meta-llama/Llama-3-8b-instruct"    # you can change this
+MODEL_NAME = "microsoft/Phi-3-mini-4k-instruct"    # You can change this
 MAX_TOKENS = 512
 
 
@@ -22,13 +21,15 @@ def build_prompt(user_query: str):
     """Combines examples + the user's query into one training-style prompt."""
     examples = load_examples()
 
-    # Prompt format for Llama/Gemma style instruction models
+    # Prompt format with a clear separator to prevent extra query repetitions
     return f"""
-Below are examples of how to respond to user queries.
+Below are examples of book recommendations (ignore these for your own reasoning):
 
 {examples}
 
-Now follow the same format for this new query:
+---
+
+Now answer this query:
 
 USER QUERY:
 {user_query}
@@ -51,24 +52,22 @@ class BookRecommender:
     def query(self, user_query: str):
         """Generate a model response for a book search query."""
         prompt = build_prompt(user_query)
-
         raw_output = self.pipe(prompt)[0]["generated_text"]
 
-        # Only return the part AFTER "MODEL OUTPUT:"
+        # Only return the part AFTER the last "MODEL OUTPUT:" to avoid extra example responses
         if "MODEL OUTPUT:" in raw_output:
-            raw_output = raw_output.split("MODEL OUTPUT:", 1)[1].strip()
+            raw_output = raw_output.split("MODEL OUTPUT:")[-1].strip()
 
-        # Try to load JSON if the model responded in JSON
+        # Try to parse JSON if the model returned structured data
         try:
             parsed = json.loads(raw_output)
             return parsed
         except json.JSONDecodeError:
-            # Return raw text if parsing fails
             return raw_output
 
 
-# Example run
+# Example run for testing
 if __name__ == "__main__":
     br = BookRecommender()
-    result = br.query("Recommend books like The Lord of the Rings, epic fantasy with adventure.")
+    result = br.query("Recommend books like Harry Potter, fantasy with magic.")
     print(result)
