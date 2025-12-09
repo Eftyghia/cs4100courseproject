@@ -50,6 +50,5 @@ I built a working book recommender system using a few-shot prompting approach wi
 
 ## References
 1. Hugging Face Transformers Documentation: https://huggingface.co/docs/transformers
-3. Meta Gemma Model Card: hhttps://huggingface.co/google/gemma-2-2b-it
-4. Brown, T., et al. (2020). Language Models are Few-Shot Learners. *arXiv preprint arXiv:2005.14165*. https://arxiv.org/abs/2005.14165
-5. GitHub Repository Examples: Hugging Face `transformers` pipelines tutorials and examples
+2. Meta Gemma Model Card: hhttps://huggingface.co/google/gemma-2-2b-it
+3. Brown, T., et al. (2020). Language Models are Few-Shot Learners. *arXiv preprint arXiv:2005.14165*. https://arxiv.org/abs/2005.14165
