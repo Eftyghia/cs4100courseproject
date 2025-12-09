@@ -3,7 +3,7 @@ from pathlib import Path
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 
 EXAMPLES_FILE = "src/examples.txt"
-MODEL_NAME = "microsoft/Phi-3-mini-4k-instruct"    # You can change this
+MODEL_NAME = "togethercomputer/Gemma-2-2B"
 MAX_TOKENS = 512
 
 
@@ -54,7 +54,6 @@ class BookRecommender:
         prompt = build_prompt(user_query)
         raw_output = self.pipe(prompt)[0]["generated_text"]
 
-        # Only return the part AFTER the last "MODEL OUTPUT:" to avoid extra example responses
         if "MODEL OUTPUT:" in raw_output:
             raw_output = raw_output.split("MODEL OUTPUT:")[-1].strip()
 
