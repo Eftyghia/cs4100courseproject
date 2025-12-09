@@ -1,46 +1,43 @@
 import pandas as pd
+import ast
 
 RAW_PATH = "data/booksummaries.txt"
 CLEAN_PATH = "data/books_clean.csv"
 
-# which columns should be capitalized properly
-TITLE_COL = "title"
-AUTHOR_COL = "author"
-GENRE_COL = "genre"
-DESCRIPTION_COL = "description"
+def safe_parse_genres(g):
+    """Convert the weird {"/m/...": "Genre"} mapping into a comma-separated list."""
+    if pd.isna(g):
+        return ""
+    try:
+        d = ast.literal_eval(g)
+        if isinstance(d, dict):
+            return ", ".join(d.values())
+        return ""
+    except:
+        return ""
 
+# --- IMPORTANT: read the file with correct settings ---
+df = pd.read_csv(
+    RAW_PATH,
+    sep="\t",                 # TAB-separated
+    header=None,              # No header row in raw file
+    names=["book_id", "freebase_id", "title", "author", "date", "genres", "summary"],
+    quoting=3,                # Ignore quotes
+    engine="python",          # More tolerant parser
+)
 
-df = pd.read_csv(RAW_PATH)
+# --- Clean data ---
+df = df.dropna(subset=["title"])        # remove entirely empty lines
+df["title"] = df["title"].str.strip()
+df["author"] = df["author"].str.strip()
+df["summary"] = df["summary"].fillna("").str.strip()
 
-# basic cleaning
+# genres: convert dict → comma-separated list
+df["genres"] = df["genres"].apply(safe_parse_genres)
 
-# remove entirely blank rows
-df = df.dropna(how="all")
+# drop duplicates
+df = df.drop_duplicates(subset=["title", "author"])
 
-# strip whitespace from all string cells
-df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
-
-# capitalize title and author properly
-if TITLE_COL in df.columns:
-    df[TITLE_COL] = df[TITLE_COL].str.title()
-
-if AUTHOR_COL in df.columns:
-    df[AUTHOR_COL] = df[AUTHOR_COL].str.title()
-
-# normalize genres (title case)
-if GENRE_COL in df.columns:
-    df[GENRE_COL] = df[GENRE_COL].str.title()
-
-# replace missing descriptions
-if DESCRIPTION_COL in df.columns:
-    df[DESCRIPTION_COL] = df[DESCRIPTION_COL].fillna("No description available.")
-
-# remove duplicates by title + author
-df = df.drop_duplicates(subset=[TITLE_COL, AUTHOR_COL], keep="first")
-
-# save
-
+# save cleaned file
 df.to_csv(CLEAN_PATH, index=False)
-
-print("Cleaning complete!")
-print("Saved cleaned data to:", CLEAN_PATH)
+print("Cleaned data saved to:", CLEAN_PATH)
