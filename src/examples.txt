@@ -1,0 +1,88 @@
+USER QUERY:
+Find me books about a young hero who discovers they have magical powers. I like adventure and fantasy.
+
+MODEL OUTPUT:
+[
+  {
+    "title": "Harry Potter And The Philosopher's Stone",
+    "author": "J. K. Rowling",
+    "reason": "Features a young protagonist who discovers magical powers and enters a fantasy adventure world."
+  },
+  {
+    "title": "The Dark Is Rising",
+    "author": "Susan Cooper",
+    "reason": "Centers on a boy who learns he has supernatural abilities and is drawn into a magical conflict."
+  }
+]
+
+
+USER QUERY:
+I want a story similar to The Hunger Games — something dystopian with a strong female lead.
+
+MODEL OUTPUT:
+[
+  {
+    "title": "Divergent",
+    "author": "Veronica Roth",
+    "reason": "Dystopian world with faction-based society and a strong female protagonist."
+  },
+  {
+    "title": "Matched",
+    "author": "Ally Condie",
+    "reason": "Features a controlled society and a young woman who rebels against its rules."
+  }
+]
+
+
+USER QUERY:
+Recommend classic science fiction books that involve space travel or alien civilizations.
+
+MODEL OUTPUT:
+[
+  {
+    "title": "Foundation",
+    "author": "Isaac Asimov",
+    "reason": "A cornerstone sci-fi series involving galactic-scale travel and civilizations."
+  },
+  {
+    "title": "Childhood's End",
+    "author": "Arthur C. Clarke",
+    "reason": "Centers around alien contact and humanity’s transformation."
+  }
+]
+
+
+USER QUERY:
+I’m looking for a mystery book about a detective solving a complicated crime. Preferably something dark and gritty.
+
+MODEL OUTPUT:
+[
+  {
+    "title": "The Big Sleep",
+    "author": "Raymond Chandler",
+    "reason": "A noir detective novel known for its gritty atmosphere and complex investigation."
+  },
+  {
+    "title": "The Hound Of The Baskervilles",
+    "author": "Arthur Conan Doyle",
+    "reason": "Classic detective story solving a mysterious and layered crime."
+  }
+]
+
+
+USER QUERY:
+Suggest books with themes of friendship and coming-of-age. Contemporary or YA is fine.
+
+MODEL OUTPUT:
+[
+  {
+    "title": "The Perks Of Being A Wallflower",
+    "author": "Stephen Chbosky",
+    "reason": "A coming-of-age story centered on friendship, growing up, and emotional discovery."
+  },
+  {
+    "title": "Bridge To Terabithia",
+    "author": "Katherine Paterson",
+    "reason": "Explores childhood friendship and personal growth through emotional challenges."
+  }
+]
